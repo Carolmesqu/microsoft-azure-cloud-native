@@ -1,0 +1,32 @@
+# Ignorar arquivos de ambiente
+.env
+
+# Ignorar dependências (Node.js)
+node_modules/
+
+# Ignorar pastas de build/output
+dist/
+build/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar configurações do editor/IDE
+.vscode/
+.idea/
+
+# Ignorar arquivos Python (se for o caso)
+__pycache__/
+*.pyc
+
+# Ignorar virtualenvs
+venv/
+.env/
+
+# Ignorar arquivos de backup
+*.bak
+*.tmp

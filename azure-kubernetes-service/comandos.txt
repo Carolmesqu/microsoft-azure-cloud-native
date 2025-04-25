@@ -1,0 +1,9 @@
+docker build -t sobre/land:latest .
+
+docker run -d -p 80:80 sobre/land:latest
+
+az login
+
+az acr login --name testcarolmesqu
+
+docker tag sobre/land:latest testcarolmesqu.azurecr.io/sobre-land:latest

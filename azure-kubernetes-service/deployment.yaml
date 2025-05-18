@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testcarolmesqu-azure-kubernetes-service
+  labels:
+    app: testcarolmesqu-azure-kubernetes-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testcarolmesqu-azure-kubernetes-service
+  template:
+    metadata:
+      labels:
+        app: testcarolmesqu-azure-kubernetes-service
+    spec:
+      containers:
+        - name: testcarolmesqu-azure-kubernetes-service
+          image: testcarolmesqu.azurecr.io/sobre-land:latest
+          ports:
+            - containerPort: 80

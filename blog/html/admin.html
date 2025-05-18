@@ -1,0 +1,150 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Administração do Blog</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f3f8f3;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .post-form input,
+    .post-form textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .post {
+      background-color: white;
+      padding: 15px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .actions {
+      margin-top: 10px;
+    }
+
+    .actions button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Área Administrativa</h1>
+    <p>Crie, edite ou delete seus posts</p>
+  </header>
+
+  <main>
+    <div class="post-form">
+      <input type="text" id="titulo" placeholder="Título do post">
+      <textarea id="conteudo" rows="4" placeholder="Conteúdo do post"></textarea>
+      <button onclick="salvarPost()">Salvar</button>
+    </div>
+
+    <h2>Posts Existentes</h2>
+    <div id="posts"></div>
+  </main>
+
+  <script>
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    let editIndex = null;
+
+    function salvarPost() {
+      const titulo = document.getElementById('titulo').value.trim();
+      const conteudo = document.getElementById('conteudo').value.trim();
+
+      if (!titulo || !conteudo) {
+        alert("Preencha título e conteúdo");
+        return;
+      }
+
+      const post = { titulo, conteudo };
+
+      if (editIndex !== null) {
+        posts[editIndex] = post;
+        editIndex = null;
+      } else {
+        posts.push(post);
+      }
+
+      localStorage.setItem('posts', JSON.stringify(posts));
+      limparFormulario();
+      exibirPosts();
+    }
+
+    function editarPost(index) {
+      const post = posts[index];
+      document.getElementById('titulo').value = post.titulo;
+      document.getElementById('conteudo').value = post.conteudo;
+      editIndex = index;
+    }
+
+    function deletarPost(index) {
+      if (confirm("Tem certeza que deseja deletar este post?")) {
+        posts.splice(index, 1);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        exibirPosts();
+      }
+    }
+
+    function limparFormulario() {
+      document.getElementById('titulo').value = '';
+      document.getElementById('conteudo').value = '';
+    }
+
+    function exibirPosts() {
+      const container = document.getElementById('posts');
+      container.innerHTML = '';
+
+      posts.forEach((post, index) => {
+        const el = document.createElement('div');
+        el.className = 'post';
+        el.innerHTML = `
+          <h3>${post.titulo}</h3>
+          <p>${post.conteudo}</p>
+          <div class="actions">
+            <button onclick="editarPost(${index})">Editar</button>
+            <button onclick="deletarPost(${index})">Excluir</button>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    exibirPosts();
+  </script>
+</body>
+</html>

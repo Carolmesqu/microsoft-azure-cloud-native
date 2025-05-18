@@ -1,0 +1,91 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog da Carolina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f3f8f3;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      padding: 20px;
+    }
+
+    .sidebar {
+      width: 30%;
+      padding: 20px;
+      background-color: #e6f2e6;
+      border-right: 1px solid #ccc;
+    }
+
+    .content {
+      width: 70%;
+      padding: 20px;
+    }
+
+    .post {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .admin-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blog da Carolina</h1>
+    <p>Bem-vindos ao meu cantinho digital!</p>
+  </header>
+
+  <main>
+    <div class="sidebar">
+      <h2>Sobre mim</h2>
+      <p>Desenvolvedora apaixonada por tecnologia e café ☕</p>
+      <a class="admin-link" href="admin.html">Área Administrativa</a>
+    </div>
+
+    <div class="content">
+      <h2>Últimos Posts</h2>
+      <div id="posts"></div>
+    </div>
+  </main>
+
+  <script>
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+    function exibirPosts() {
+      const container = document.getElementById('posts');
+      container.innerHTML = '';
+
+      posts.forEach((post, index) => {
+        const el = document.createElement('div');
+        el.className = 'post';
+        el.innerHTML = `<h3>${post.titulo}</h3><p>${post.conteudo}</p>`;
+        container.appendChild(el);
+      });
+    }
+
+    exibirPosts();
+  </script>
+</body>
+</html>

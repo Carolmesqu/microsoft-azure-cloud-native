@@ -7,3 +7,17 @@ az login
 az acr login --name testcarolmesqu
 
 docker tag sobre/land:latest testcarolmesqu.azurecr.io/sobre-land:latest
+
+docker push testcarolmesqu.azurecr.io/sobre-land:latest
+
+Criar arquivos de Services.yaml e Deployment.yaml
+
+Antes disso \/ isso > az account set --subscription a4badb7c-4b1b-4056-9b5a-4912c7f38a75
+
+az aks get-credentials --resource-group LAB001 --name aks-dev-eastus-001-dio-lab01-carolmesqu
+
+kubectl apply -f deployment.yaml
+
+kubectl apply -f service.yaml
+
+kubectl get svc testcarolmesqu-azure-kubernetes-service
